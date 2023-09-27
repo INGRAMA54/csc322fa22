@@ -1,0 +1,50 @@
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 500);
+camera.position.set(0, 0, 100);
+camera.lookAt(0, 0, 0);
+
+const scene = new THREE.Scene();
+
+const colors = [
+  new THREE.Color("rgb(255, 0, 0)"),  // Red using RGB string
+  new THREE.Color(0x00ff00),          // Green using hexadecimal notation
+  new THREE.Color(0, 0, 1),           // Blue using separate RGB values between 0 and 1
+  new THREE.Color("rgb(255, 255, 0)"),  // Yellow using RGB string
+  new THREE.Color(0xff00ff),          // Magenta using hexadecimal notation
+  new THREE.Color(1, 0.5, 0),         // Orange using separate RGB values between 0 and 1
+  new THREE.Color("rgb(0, 255, 255)"),  // Cyan using RGB string
+  new THREE.Color(0.5, 0, 0.5)        // Purple using separate RGB values between 0 and 1
+];
+
+const points = [];
+points.push(new THREE.Vector3(-8.5, 0, 0));
+points.push(new THREE.Vector3(0, 20, 0));
+points.push(new THREE.Vector3(8.5, 0, 0));
+points.push(new THREE.Vector3(-8.5, 0, 0));
+
+points.push(new THREE.Vector3(-8.5, -100, 0));
+points.push(new THREE.Vector3(0, -89, 15));
+points.push(new THREE.Vector3(0, 10, 20));
+points.push(new THREE.Vector3(0, 20, 0));
+points.push(new THREE.Vector3(0, -72, 31));
+points.push(new THREE.Vector3(7, -85, 13.5));
+points.push(new THREE.Vector3(8.5, 0, 0));
+
+const geometries = [];
+const materials = [];
+
+for (let i = 0; i < points.length - 1; i++) {
+  const geometry = new THREE.BufferGeometry().setFromPoints([points[i], points[i + 1]]);
+  geometries.push(geometry);
+
+  const material = new THREE.LineBasicMaterial({ color: colors[i] });
+  materials.push(material);
+
+  const line = new THREE.Line(geometry, material);
+  scene.add(line);
+}
+//written by chirag
+renderer.render(scene, camera);
